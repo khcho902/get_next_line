@@ -8,19 +8,32 @@ int	main(int argc, char **argv)
 	
 	char *filename = argv[1];
 	int fd = open(filename, O_RDONLY);
-	char *line;
+	char *line = NULL;
 
-
-	get_next_line(fd, &line);
-
-	printf("%s\n", line);
 /*
-	for(int i = 0; i < BUFFER_SIZE; i++)
-	{
-		write(1, &line[i], 1);
-	}
-*/	
-	close(fd);
+	int res = get_next_line(fd, &line);
+	printf("res : %d\n", res);
+	printf("main line : %s\n", line);
+	
+	res = get_next_line(fd, &line);
+	printf("res : %d\n", res);
+	printf("main line : %s\n", line);
 
+
+	res = get_next_line(fd, &line);
+	printf("res : %d\n", res);
+	printf("main line : %s\n", line);
+*/
+
+	while(get_next_line(fd, &line))
+	{	
+		printf("main line : %s\n", line);
+	}
+
+
+	printf("while out line : %s\n", line);
+	
+	close(fd);
+	free(line);
 	return (0);
 }
