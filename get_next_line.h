@@ -6,7 +6,7 @@
 /*   By: kycho <kycho@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 22:02:28 by kycho             #+#    #+#             */
-/*   Updated: 2020/03/27 02:11:24 by kycho            ###   ########.fr       */
+/*   Updated: 2020/03/28 21:48:55 by kycho            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,8 @@ typedef struct	s_gnl_material
 }		t_gnl_material;
 
 int	get_next_line(int fd, char **line);
+void	*ft_calloc(size_t count, size_t size);
+void	*ft_memccpy(void *dst, const void *src, int c, size_t n);
+size_t	ft_strlen(const char *s);
 
 #endif
