@@ -6,7 +6,7 @@
 /*   By: kycho <kycho@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 22:04:43 by kycho             #+#    #+#             */
-/*   Updated: 2020/03/29 01:59:12 by kycho            ###   ########.fr       */
+/*   Updated: 2020/03/29 04:17:06 by kycho            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ int	get_next_line(int fd, char **line)
 	size_t total_size;
 	ssize_t readn;
 
+	if (fd <0 || line == NULL || BUFFER_SIZE <= 0)
+		return (-1);
 	*line = NULL;
 	total_size = 0;
 	if (expand_line_size(line, &total_size) == -1)
@@ -96,7 +98,7 @@ int	get_next_line(int fd, char **line)
 	{
 		readn = read_to_buffer(fd, &material);
 		if (readn == -1 || readn == 0)
-			return (readn == -1 ? -1 : 1);
+			return (readn);
 		if (expand_line_size(line, &total_size) == -1)
 			return (-1);
 	}
