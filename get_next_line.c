@@ -6,13 +6,13 @@
 /*   By: kycho <kycho@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 22:04:43 by kycho             #+#    #+#             */
-/*   Updated: 2020/03/29 01:37:19 by kycho            ###   ########.fr       */
+/*   Updated: 2020/03/29 01:59:12 by kycho            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-ssize_t	read_to_buffer(int fd, t_gnl_material *material)
+static ssize_t	read_to_buffer(int fd, t_gnl_material *material)
 {
 	ssize_t readn;
 
@@ -25,7 +25,7 @@ ssize_t	read_to_buffer(int fd, t_gnl_material *material)
 	return (readn);
 }
 
-int	expand_memory_size(char **line, size_t *total_size)
+static int	expand_line_size(char **line, size_t *total_size)
 {
 	char *new_line;
 
@@ -51,7 +51,7 @@ int	expand_memory_size(char **line, size_t *total_size)
 	return (1);
 }
 
-int	copy_buffer(char **line, t_gnl_material *material)
+static int	copy_buffer(char **line, t_gnl_material *material)
 {
 	char ch;
 	size_t line_idx;
@@ -82,22 +82,22 @@ int	get_next_line(int fd, char **line)
 	size_t total_size;
 	ssize_t readn;
 
+	*line = NULL;
+	total_size = 0;
+	if (expand_line_size(line, &total_size) == -1)
+		return (-1);
 	if (material.value_to_print_exist == 0)
 	{
 		readn = read_to_buffer(fd, &material);
 		if (readn == -1 || readn == 0)
 			return (readn);
 	}	
-	*line = NULL;
-	total_size = 0;
-	if (expand_memory_size(line, &total_size) == -1)
-		return (-1);
 	while (copy_buffer(line, &material) == 1)
 	{
 		readn = read_to_buffer(fd, &material);
 		if (readn == -1 || readn == 0)
 			return (readn == -1 ? -1 : 1);
-		if (expand_memory_size(line, &total_size) == -1)
+		if (expand_line_size(line, &total_size) == -1)
 			return (-1);
 	}
 	return (1);
