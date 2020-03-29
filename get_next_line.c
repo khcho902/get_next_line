@@ -6,7 +6,7 @@
 /*   By: kycho <kycho@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 22:04:43 by kycho             #+#    #+#             */
-/*   Updated: 2020/03/29 04:17:06 by kycho            ###   ########.fr       */
+/*   Updated: 2020/03/29 14:47:58 by kycho            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ static int	expand_line_size(char **line, size_t *total_size)
 	{
 		new_line = ft_calloc(*total_size + BUFFER_SIZE, sizeof(char));
 		if (new_line == NULL)
-		{
-			free(*line);
 			return (-1);
-		}
 		ft_memccpy(new_line, *line, '\0', *total_size);
 		free(*line);
 		*line = new_line;
