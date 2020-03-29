@@ -6,7 +6,7 @@
 /*   By: kycho <kycho@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 22:04:43 by kycho             #+#    #+#             */
-/*   Updated: 2020/03/29 14:53:26 by kycho            ###   ########.fr       */
+/*   Updated: 2020/03/29 15:41:32 by kycho            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	get_next_line(int fd, char **line)
 	size_t total_size;
 	ssize_t readn;
 
-	if (fd <0 || line == NULL || BUFFER_SIZE <= 0)
+	if (fd < 0 || line == NULL || BUFFER_SIZE <= 0)
 		return (-1);
 	*line = NULL;
 	total_size = 0;
