@@ -6,7 +6,7 @@
 /*   By: kycho <kycho@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 22:04:43 by kycho             #+#    #+#             */
-/*   Updated: 2020/03/29 15:41:32 by kycho            ###   ########.fr       */
+/*   Updated: 2020/04/11 02:57:13 by kycho            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@ static ssize_t	read_to_buffer(int fd, t_gnl_material *material)
 	return (readn);
 }
 
-static int	expand_line_size(char **line, size_t *total_size)
+static int		expand_line_size(char **line, size_t *total_size)
 {
 	char *new_line;
 
 	if (*total_size == 0 && *line == NULL)
 	{
-		if(!(*line = ft_calloc(BUFFER_SIZE + 1, sizeof(char))))
+		if (!(*line = ft_calloc(BUFFER_SIZE + 1, sizeof(char))))
 			return (-1);
 		*total_size = BUFFER_SIZE + 1;
 	}
-	else 
+	else
 	{
 		new_line = ft_calloc(*total_size + BUFFER_SIZE, sizeof(char));
 		if (new_line == NULL)
@@ -48,10 +48,10 @@ static int	expand_line_size(char **line, size_t *total_size)
 	return (1);
 }
 
-static int	copy_buffer(char **line, t_gnl_material *material)
+static int		copy_buffer(char **line, t_gnl_material *material)
 {
-	char ch;
-	size_t line_idx;
+	char	ch;
+	size_t	line_idx;
 
 	line_idx = ft_strlen(*line);
 	while (material->start_idx <= material->last_idx)
@@ -70,14 +70,14 @@ static int	copy_buffer(char **line, t_gnl_material *material)
 		material->start_idx++;
 	}
 	material->value_to_print_exist = 0;
-	return (1); 
+	return (1);
 }
 
-int	get_next_line(int fd, char **line)
+int				get_next_line(int fd, char **line)
 {
-	static t_gnl_material material[FD_NUMBER];
-	size_t total_size;
-	ssize_t readn;
+	static t_gnl_material	material[FD_NUMBER];
+	size_t					total_size;
+	ssize_t					readn;
 
 	if (fd < 0 || line == NULL || BUFFER_SIZE <= 0)
 		return (-1);
@@ -90,7 +90,7 @@ int	get_next_line(int fd, char **line)
 		readn = read_to_buffer(fd, &material[fd]);
 		if (readn == -1 || readn == 0)
 			return (readn);
-	}	
+	}
 	while (copy_buffer(line, &material[fd]) == 1)
 	{
 		readn = read_to_buffer(fd, &material[fd]);

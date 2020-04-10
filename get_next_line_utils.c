@@ -6,15 +6,15 @@
 /*   By: kycho <kycho@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/28 21:39:35 by kycho             #+#    #+#             */
-/*   Updated: 2020/03/28 21:50:21 by kycho            ###   ########.fr       */
+/*   Updated: 2020/04/11 02:53:16 by kycho            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void    *ft_calloc(size_t count, size_t size)
+void	*ft_calloc(size_t count, size_t size)
 {
-	void    *ptr;
+	void	*ptr;
 	size_t	idx;
 
 	ptr = (char *)malloc(count * size);
@@ -29,7 +29,7 @@ void    *ft_calloc(size_t count, size_t size)
 	return (ptr);
 }
 
-void    *ft_memccpy(void *dst, const void *src, int c, size_t n)
+void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
 	size_t idx;
 
@@ -44,7 +44,7 @@ void    *ft_memccpy(void *dst, const void *src, int c, size_t n)
 	return (NULL);
 }
 
-size_t  ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
 	size_t len;
 
