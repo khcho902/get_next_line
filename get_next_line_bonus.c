@@ -6,7 +6,7 @@
 /*   By: kycho <kycho@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 22:04:43 by kycho             #+#    #+#             */
-/*   Updated: 2020/04/11 02:57:13 by kycho            ###   ########.fr       */
+/*   Updated: 2020/04/12 03:29:35 by kycho            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,25 @@ static ssize_t	read_to_buffer(int fd, t_gnl_material *material)
 	return (readn);
 }
 
-static int		expand_line_size(char **line, size_t *total_size)
+static int		expand_line_size(char **line, size_t *line_size)
 {
 	char *new_line;
 
-	if (*total_size == 0 && *line == NULL)
+	if (*line_size == 0 && *line == NULL)
 	{
 		if (!(*line = ft_calloc(BUFFER_SIZE + 1, sizeof(char))))
 			return (-1);
-		*total_size = BUFFER_SIZE + 1;
+		*line_size = BUFFER_SIZE + 1;
 	}
 	else
 	{
-		new_line = ft_calloc(*total_size + BUFFER_SIZE, sizeof(char));
+		new_line = ft_calloc(*line_size + BUFFER_SIZE, sizeof(char));
 		if (new_line == NULL)
 			return (-1);
-		ft_memccpy(new_line, *line, '\0', *total_size);
+		ft_memccpy(new_line, *line, '\0', *line_size);
 		free(*line);
 		*line = new_line;
-		*total_size += BUFFER_SIZE;
+		*line_size += BUFFER_SIZE;
 	}
 	return (1);
 }
@@ -76,14 +76,14 @@ static int		copy_buffer(char **line, t_gnl_material *material)
 int				get_next_line(int fd, char **line)
 {
 	static t_gnl_material	material[FD_NUMBER];
-	size_t					total_size;
+	size_t					line_size;
 	ssize_t					readn;
 
 	if (fd < 0 || line == NULL || BUFFER_SIZE <= 0)
 		return (-1);
 	*line = NULL;
-	total_size = 0;
-	if (expand_line_size(line, &total_size) == -1)
+	line_size = 0;
+	if (expand_line_size(line, &line_size) == -1)
 		return (-1);
 	if (material[fd].value_to_print_exist == 0)
 	{
@@ -96,7 +96,7 @@ int				get_next_line(int fd, char **line)
 		readn = read_to_buffer(fd, &material[fd]);
 		if (readn == -1 || readn == 0)
 			return (readn);
-		if (expand_line_size(line, &total_size) == -1)
+		if (expand_line_size(line, &line_size) == -1)
 			return (-1);
 	}
 	return (1);
